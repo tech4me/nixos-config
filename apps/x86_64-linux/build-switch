@@ -1,0 +1,53 @@
+#!/bin/sh -e
+
+VERSION=1.0
+
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+SYSTEM=$(uname -m)
+USERNAME=$(whoami)
+
+# Check if this is NixOS or another Linux distro
+IS_NIXOS=false
+if [[ -f /etc/os-release ]]; then
+  if grep -q "ID=nixos" /etc/os-release; then
+    IS_NIXOS=true
+  fi
+fi
+
+case "$SYSTEM" in
+  x86_64)
+    FLAKE_TARGET="x86_64-linux"
+    ;;
+  aarch64)
+    FLAKE_TARGET="aarch64-linux"
+    ;;
+  *)
+    echo -e "${RED}Unsupported architecture: $SYSTEM${NC}"
+    exit 1
+    ;;
+esac
+
+echo -e "${YELLOW}Starting...${NC}"
+
+if [[ "$IS_NIXOS" == "true" ]]; then
+  echo -e "${GREEN}Building NixOS configuration...${NC}"
+  # We pass SSH from user to root so root can download secrets from our private Github
+  sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK /run/current-system/sw/bin/nixos-rebuild switch --flake .#$FLAKE_TARGET $@
+  echo -e "${GREEN}Switch to new NixOS generation complete!${NC}"
+else
+  echo -e "${GREEN}Building Home Manager configuration for non-NixOS Linux...${NC}"
+  # Determine the home-manager configuration name based on architecture
+  if [[ "$SYSTEM" == "x86_64" ]]; then
+    HM_CONFIG="${USERNAME}@linux"
+  else
+    HM_CONFIG="${USERNAME}@linux-aarch64"
+  fi
+  
+  # Build and activate the home-manager configuration
+  nix run home-manager/master -- switch --flake .#$HM_CONFIG $@
+  echo -e "${GREEN}Home Manager configuration activated!${NC}"
+fi

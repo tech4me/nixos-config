@@ -49,11 +49,11 @@
       };
       mkApp = scriptName: system: {
         type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-          #!/usr/bin/env bash
-          PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
+        program = let
+          scriptPath = "${self}/apps/${system}/${scriptName}";
+          scriptContent = builtins.readFile scriptPath;
+        in "${(nixpkgs.legacyPackages.${system}.writeShellScriptBin scriptName ''
+          ${scriptContent}
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {

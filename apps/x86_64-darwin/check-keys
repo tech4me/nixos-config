@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 GREEN=$'\033[1;32m'
 RED=$'\033[1;31m'

@@ -186,6 +186,8 @@ let name = "Steven Yin";
     initContent = lib.mkBefore ''
       if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      fi
+      if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix.sh ]]; then
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 

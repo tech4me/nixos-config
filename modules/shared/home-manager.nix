@@ -150,12 +150,21 @@ let name = "Steven Yin";
 
   starship = {
     enable = true;
+    enableZshIntegration = true;
   };
 
   wezterm = {
     enable = true;
     enableZshIntegration = true;
     extraConfig = builtins.readFile ./config/wezterm.lua;
+  };
+
+  zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    options = [
+      "--cmd cd"
+    ];
   };
 
   zsh = {
@@ -180,9 +189,6 @@ let name = "Steven Yin";
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
-      # starship prompt
-      eval "$(starship init zsh)"
-
       # Define variables for directories
       export PATH=$HOME/.local/share/bin:$PATH
 
@@ -200,12 +206,6 @@ let name = "Steven Yin";
 
       # Use difftastic, syntax-aware diffing
       alias diff=difft
-
-      # Always color ls and group directories
-      alias ls='ls --color=auto'
-
-      # zoxide
-      eval "$(zoxide init zsh --cmd cd)"
     '';
   };
 }

@@ -146,7 +146,6 @@
                 username = user;
                 homeDirectory = "/home/${user}";
               };
-              backupFileExtension = "backup";
             }
           ];
         };
@@ -161,7 +160,6 @@
                 username = user;
                 homeDirectory = "/home/${user}";
               };
-              backupFileExtension = "backup";
             }
           ];
         };

@@ -104,6 +104,7 @@
               home-manager.users.${user} = {
                 imports = [ nixvim.homeManagerModules.nixvim ];
               };
+              home-manager.backupFileExtension = "backup";
             }
             ./hosts/darwin
           ];
@@ -145,6 +146,7 @@
                 username = user;
                 homeDirectory = "/home/${user}";
               };
+              backupFileExtension = "backup";
             }
           ];
         };
@@ -159,6 +161,7 @@
                 username = user;
                 homeDirectory = "/home/${user}";
               };
+              backupFileExtension = "backup";
             }
           ];
         };

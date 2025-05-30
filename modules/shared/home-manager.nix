@@ -9,6 +9,11 @@ let name = "Steven Yin";
     enableZshIntegration = true;
   };
 
+  fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   git = {
     enable = true;
     ignores = [ "*.swp" ];
@@ -120,18 +125,20 @@ let name = "Steven Yin";
       ${user} = {
         hostname = "${user}";
         forwardAgent = true; 
-        extraOptions = {
-          RemoteCommand = "tmux -CC new -A -s session";
-          RequestTTY = "force";
-        };
-      }; 
-      sft = {
-        match = "exec \"/usr/local/bin/sft resolve -q %h\"";
         proxyCommand = "/usr/local/bin/sft proxycommand %h";
         extraOptions = {
+        #  RemoteCommand = "tmux -CC new -A -s session";
+        #  RequestTTY = "force";
           userKnownHostsFile = "/Users/${user}/Library/Application Support/ScaleFT/proxycommand_known_hosts";
         };
-      };
+      }; 
+      #sft = {
+      #  match = "exec \"/usr/local/bin/sft resolve -q %h\"";
+      #  proxyCommand = "/usr/local/bin/sft proxycommand %h";
+      #  extraOptions = {
+      #    userKnownHostsFile = "/Users/${user}/Library/Application Support/ScaleFT/proxycommand_known_hosts";
+      #  };
+      #};
       "github.com" = {
         extraOptions = {
           addKeysToAgent = "yes"; 

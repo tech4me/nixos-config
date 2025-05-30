@@ -9,4 +9,12 @@ config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
 config.window_background_opacity = 0.96
 config.macos_window_background_blur = 20
 
+config.ssh_domains = {
+  {
+    name = 'vm',
+    remote_address = 'syin',
+    remote_wezterm_path = "/home/syin/.nix-profile/bin/wezterm",
+  },
+}
+
 return config

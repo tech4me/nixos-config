@@ -9,6 +9,7 @@ with pkgs; [
   fzf
   killall
   neofetch
+  nodejs
   starship
   wezterm
   wget
@@ -16,7 +17,6 @@ with pkgs; [
   zoxide
 
   # Encryption and security tools
-
 
   # Media-related packages
   font-awesome

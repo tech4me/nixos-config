@@ -130,6 +130,11 @@ let name = "Steven Yin";
         #  RemoteCommand = "tmux -CC new -A -s session";
         #  RequestTTY = "force";
           userKnownHostsFile = "/Users/${user}/Library/Application Support/ScaleFT/proxycommand_known_hosts";
+          ServerAliveInterval = 10;
+          ServerAliveCountMax = 4;
+          ControlMaster = "auto";
+          ControlPath = "~/.ssh/sockets//%r@%h-%p";
+          ControlPersist = "600";
         };
       }; 
       #sft = {

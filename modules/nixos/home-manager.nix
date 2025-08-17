@@ -33,6 +33,10 @@ in
     homeDirectory = "/home/${user}";
     packages = pkgs.callPackage ./packages.nix {};
     file = shared-files // import ./files.nix { inherit user; };
+    sessionVariables = {
+      CPATH = "$HOME/.nix-profile/include";
+      LIBRARY_PATH = "$HOME/.nix-profile/lib";
+    };
     stateVersion = "21.05";
   };
 

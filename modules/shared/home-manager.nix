@@ -126,12 +126,12 @@ let name = "Steven Yin";
         hostname = "${user}";
         forwardAgent = true; 
         proxyCommand = "/usr/local/bin/sft proxycommand %h";
+        serverAliveInterval = 10;
+        serverAliveCountMax = 4;
         extraOptions = {
         #  RemoteCommand = "tmux -CC new -A -s session";
         #  RequestTTY = "force";
           userKnownHostsFile = "/Users/${user}/Library/Application Support/ScaleFT/proxycommand_known_hosts";
-          ServerAliveInterval = 10;
-          ServerAliveCountMax = 4;
           ControlMaster = "auto";
           ControlPath = "~/.ssh/sockets//%r@%h-%p";
           ControlPersist = "600";
@@ -163,6 +163,14 @@ let name = "Steven Yin";
   starship = {
     enable = true;
     enableZshIntegration = true;
+    settings = {
+      python = {
+        disabled = true;
+      };
+      gcloud = {
+        disabled = true;
+      };
+    };
   };
 
   wezterm = {
@@ -203,23 +211,34 @@ let name = "Steven Yin";
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
+      # Ensure libclang and libstdc++ are discoverable for bindgen
+      # TODO: MOVE THIS TO SESSION VARIABLES
+      export LIBCLANG_PATH="${pkgs.llvmPackages_latest.libclang.lib}/lib"
+      export LD_LIBRARY_PATH="${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.llvmPackages_latest.libclang.lib ]}:$LD_LIBRARY_PATH"
+
       # Define variables for directories
       export PATH=$HOME/.local/share/bin:$PATH
 
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"
 
-      # neovim is my editor
-      export ALTERNATE_EDITOR=""
-      export EDITOR="nvim"
-
       # nix shortcuts
       shell() {
           nix-shell '<nixpkgs>' -A "$1"
       }
 
+      # Emaces mode
+      bindkey -e
+
       # Use difftastic, syntax-aware diffing
       alias diff=difft
+
+      # zsh-history-substring-search configuration
+      bindkey '^[[A' history-substring-search-up # or '\eOA'
+      bindkey '^[[B' history-substring-search-down # or '\eOB'
+      HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
+      # . /home/syin/.config/groq-bootstrap/groq-bootstrap.zsh
     '';
   };
 }

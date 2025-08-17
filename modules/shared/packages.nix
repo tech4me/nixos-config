@@ -10,13 +10,20 @@ with pkgs; [
   killall
   neofetch
   nodejs
+  #pkg-config
   starship
   wezterm
   wget
   zip
   zoxide
 
-  # Encryption and security tools
+  # LLVM packages
+  #stdenv.cc.cc.lib
+  #llvmPackages_latest.clang
+  llvmPackages_latest.libclang.lib
+  llvmPackages_latest.llvm
+  llvmPackages_latest.llvm.dev
+  llvmPackages_latest.mlir.dev
 
   # Media-related packages
   font-awesome

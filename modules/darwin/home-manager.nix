@@ -49,6 +49,10 @@ in
           sharedFiles
           additionalFiles
         ];
+        sessionVariables = {
+          CPATH = "$HOME/.nix-profile/include";
+          LIBRARY_PATH = "$HOME/.nix-profile/lib";
+        };
         stateVersion = "23.11";
       };
       programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };

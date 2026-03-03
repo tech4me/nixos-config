@@ -10,7 +10,6 @@ with pkgs; [
   killall
   neofetch
   nodejs
-  #pkg-config
   starship
   wezterm
   wget

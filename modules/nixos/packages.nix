@@ -3,13 +3,6 @@
 with pkgs;
 let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
-
-  # Linux toolchain (NixOS)
-  gcc
-  binutils
-  glibc.dev
-  stdenv.cc.cc.lib
-
   # Security and authentication
   yubikey-agent
   keepassxc

@@ -211,11 +211,6 @@ let name = "Steven Yin";
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
-      # Ensure libclang and libstdc++ are discoverable for bindgen
-      # TODO: MOVE THIS TO SESSION VARIABLES
-      export LIBCLANG_PATH="${pkgs.llvmPackages_latest.libclang.lib}/lib"
-      export LD_LIBRARY_PATH="${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.llvmPackages_latest.libclang.lib ]}:$LD_LIBRARY_PATH"
-
       # Define variables for directories
       export PATH=$HOME/.local/share/bin:$PATH
 

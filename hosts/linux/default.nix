@@ -11,13 +11,8 @@ in
     username = user;
     homeDirectory = "/home/${user}";
     stateVersion = "24.05"; # Please check the Home Manager release notes before changing.
-    sessionVariables = {
-      CPATH = "$HOME/.nix-profile/include";
-      LIBRARY_PATH = "$HOME/.nix-profile/lib";
-    };
     
-    # Install packages (Linux-specific bundle)
-    packages = import ../../modules/linux/packages.nix { inherit pkgs; };
+    packages = import ../../modules/shared/packages.nix { inherit pkgs; };
   };
 
   # Import shared programs
